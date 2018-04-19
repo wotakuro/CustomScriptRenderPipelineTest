@@ -5,7 +5,7 @@
 
 ## SRP使用のオン／オフを切り替えてみる
 Menuの「Tools/SRPChanger」のチェックボックスの On/Offを切り替えることで、通常の描画パスと今回の専用描画パスを切り替えられます。<br />
-![alt text](doc/SPRChanger.png)
+![alt text](docs/SPRChanger.png)
 
 未使用時は Batches 3733
 
