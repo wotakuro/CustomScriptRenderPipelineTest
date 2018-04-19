@@ -1,55 +1,55 @@
 # CustomScriptRenderPipelineTest
 ## About
-���̃v���W�F�N�g�� ���삵��ScriptableRenderPipeline(SRP)�̃e�X�g�p�ɍ쐬���܂����B<br />
-���̃v���W�F�N�g��p�� Shader / �`��p�X�ɓ��������`�ł���Ă��܂��B<br />
+このプロジェクトは 自作したScriptableRenderPipeline(SRP)のテスト用に作成しました。<br />
+このプロジェクト専用の Shader / 描画パスに特化した形でやっています。<br />
 
-## SRP�g�p�̃I���^�I�t��؂�ւ��Ă݂�
-Menu�́uTools/SRPChanger�v�̃`�F�b�N�{�b�N�X�� On/Off��؂�ւ��邱�ƂŁA�ʏ�̕`��p�X�ƍ���̐�p�`��p�X��؂�ւ����܂��B<br />
+## SRP使用のオン／オフを切り替えてみる
+Menuの「Tools/SRPChanger」のチェックボックスの On/Offを切り替えることで、通常の描画パスと今回の専用描画パスを切り替えられます。<br />
 ![alt text](doc/SPRChanger.png)
 
-���g�p���� Batches 3733
+未使用時は Batches 3733
 
-![alt text](doc/SRPOff.png)
+![alt text](docs/SRPOff.png)
 
-�����p��Rendering�p�X���� Batches 31
+今回専用のRenderingパス時は Batches 31
 
-![alt text](doc/CustomSRPOn.png)
+![alt text](docs/CustomSRPOn.png)
 
-��p�ɗp�ӂ��邱�ƂŐ����y�����邱�Ƃ��o���܂����B
+専用に用意することで凄く軽くすることが出来ました。
 
-## ���邭���
-### �ʏ�̃p�X
-�ʏ�ł́ATransparent�͕`��̔j�]��h�����߁u�������O�v�ɕ`������܂��B<br />
-�����_�����O�̔j�]��h�����߁A���L�̗l�Ɂu�������O�v�����炵�܂��B<br/>
-���̂��߁A�u�e���L�����N�^�[���e�v�Ƃ����`�Ń}�e���A�����R�؂�ւ��Ȃ���`������܂��̂ŁA�o�b�`���͖c��݂܂��B<br />
+## かるく解説
+### 通常のパス
+通常では、Transparentは描画の破綻を防ぐため「奥から手前」に描画をします。<br />
+レンダリングの破綻を防ぐため、下記の様に「奥から手前」を遵守します。<br/>
+そのため、「影→キャラクター→影」という形でマテリアルを沢山切り替えながら描画をしますので、バッチ数は膨らみます。<br />
 
-![alt text](doc/SRPOff_FrameDebugger.png)
+![alt text](docs/SRPOff_FrameDebugger.png)
 
-### ����J�X�^���̕`��p�X
-����́A���L�菇�ŏ�������ł��܂��B
+### 今回カスタムの描画パス
+今回は、下記手順で書き込んでいます。
 
-1.��ɃL�����N�^�[�̃���0�o�Ȃ��ӏ��̂݁AZBuffer�֏�������<br />
-2.����ǂ̕`��<br />
-3.�L�����N�^�[�̎��̂�ZTest�ň�v�������̂ݕ`�悷��悤�ɂ���<br />
-4.�Ō�ɉe��[�x�e�X�g����ň�C�ɏ�������<br />
+1.先にキャラクターのαが0出ない箇所のみ、ZBufferへ書き込み<br />
+2.床や壁の描画<br />
+3.キャラクターの実体をZTestで一致した所のみ描画するようにする<br />
+4.最後に影を深度テストありで一気に書き込む<br />
 
-���̂悤�ɂ��邱�ƂŁA�}�e���A���؂�ւ���}���`�悷��悤�ɂ��Ă��܂��B<br />
+このようにすることで、マテリアル切り替えを抑え描画するようにしています。<br />
 
-FrameDebugger�ŉ��L�̗l�ɂȂ��Ă��܂��B
+FrameDebuggerで下記の様になっています。
 
-![alt text](doc/CustomFrame1.png)
+![alt text](docs/CustomFrame1.png)
 
-![alt text](doc/CustomFrame2.png)
+![alt text](docs/CustomFrame2.png)
 
-![alt text](doc/CustomFrame3.png)
+![alt text](docs/CustomFrame3.png)
 
 
-## �\�[�X��
+## ソース等
 
-MyScriptableRenderPipeline.cs �ɂă����_�����O�֘A�̏������s���Ă��܂��B<br />
-ScriptableRenderPiepeline�g�p���ɂ́A�uTags { "LightMode" = "BasicPass"}�v�ƌ����`�ŕ`��p�̃p�X�^�O��錾����K�v������܂��B<br />
+MyScriptableRenderPipeline.cs にてレンダリング関連の処理を行っています。<br />
+ScriptableRenderPiepeline使用時には、「Tags { "LightMode" = "BasicPass"}」と言う形で描画用のパスタグを宣言する必要があります。<br />
 
-���̂��߁A�����SRP�g�p�̂��߂̐�pShader�������܂����B<br />
-�uAssets/Shaders/SRP�v�����炪 SRP�g�p���ɗ��p���� Shader<br />
+そのため、今回はSRP使用のための専用Shaderを書きました。<br />
+「Assets/Shaders/SRP」こちらが SRP使用時に利用する Shader<br />
 <br />
-�ʏ펞�ɂ́A�uAssets/Shaders/NonSRP�v�𗘗p���ĕ`�悵�Ă��܂��B
+通常時には、「Assets/Shaders/NonSRP」を利用して描画しています。
