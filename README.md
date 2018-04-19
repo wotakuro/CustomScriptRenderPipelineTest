@@ -1,6 +1,7 @@
 # CustomScriptRenderPipelineTest
 ## About
 このプロジェクトは 自作したScriptableRenderPipeline(SRP)のテスト用に作成しました。<br />
+Unity 2018.1.0b13 で作成を行いました。<br />
 このプロジェクト専用の Shader / 描画パスに特化した形でやっています。<br />
 
 # 専用のSRPの効果
