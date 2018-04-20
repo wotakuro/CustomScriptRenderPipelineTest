@@ -6,15 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Application/Work3_Transform_Job/Job/Scenes/work3_job_manyCharaMove.unity
-    guid: 54a0bca2a03d6434fbf936f7c4b069f4
-  - enabled: 1
-    path: Assets/Application/Work4_ManyCharacter/Job/Scenes/work4_job_manyCharaRaycast.unity
-    guid: 9f8644b746012b941b6d9feae45b0353
-  - enabled: 1
-    path: Assets/Application/Work2_ArrayJob/Job/Scenes/work2_job_wars.unity
-    guid: 7a8350fe61017b34f8016349b04e47bf
-  - enabled: 1
-    path: Assets/Application/Work1_SimpleJob/Job/Scenes/work1_job_nearest.unity
-    guid: c107a97ad2d9859418c08158c0d8ab99
+    path: Assets/Scenes/demo.unity
+    guid: ac2d8c05a247dac43a39128d62319c7f
   m_configObjects: {}
